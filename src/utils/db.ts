@@ -11,4 +11,16 @@ const client = new Client({
   port: Number(process.env.POSTGRES_PORT),
 });
 
+export const connectDB = async () => {
+  try {
+    await client.connect();
+    console.log("Database connection successful!");
+  } catch (error) {
+    console.error("Database connection failed:", error);
+  } 
+  // finally {
+  //   await client.end();
+  // }
+};
+
 export default client;
