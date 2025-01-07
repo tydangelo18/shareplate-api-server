@@ -1,31 +1,31 @@
 import {
-  getUsers,
-  getUserById,
+  findAllUsers,
+  findUserById,
   createUser,
-  updateUserById,
-  deleteUserById,
+  updateUser,
+  deleteUser,
 } from "../models/userModel";
 import { User } from "../interfaces/user";
 
-export const getAllUsers = async (): Promise<User[] | null> => {
-  return await getUsers();
+export const getUsers = async (): Promise<User[] | null> => {
+  return await findAllUsers();
 };
 
-export const getOneUser = async (id: string): Promise<User | null> => {
-  return await getUserById(id);
+export const getUserById = async (id: string): Promise<User | null> => {
+  return await findUserById(id);
 };
 
-export const createOneUser = async (user: User): Promise<void> => {
+export const registerUser = async (user: User): Promise<void> => {
   await createUser(user);
 };
 
-export const updateUser = async (
+export const updateUserById = async (
   id: string,
   user: Partial<User>
 ): Promise<void> => {
-  await updateUserById(id, user);
+  await updateUser(id, user);
 };
 
-export const deleteUser = async (id: string): Promise<void> => {
-  await deleteUserById(id);
+export const deleteUserById = async (id: string): Promise<void> => {
+  await deleteUser(id);
 };

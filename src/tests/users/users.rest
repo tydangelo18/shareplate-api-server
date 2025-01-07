@@ -1,0 +1,30 @@
+GET http://localhost:3000/api/users
+Content-Type: application/json
+
+###
+GET http://localhost:3000/api/users/0e79751e-975a-422f-8dee-f6b4407c388f
+Content-Type: application/json
+
+###
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+  "first_name": "Ty",
+  "last_name": "Dee",
+  "email": "ty@shareplate.com",
+  "password": "abc123"
+}
+
+###
+PUT http://localhost:3000/api/users/0e79751e-975a-422f-8dee-f6b4407c388f
+Content-Type: application/json
+
+{
+    "first_name": "Tyler",
+    "email": "tyler@shareplate.com"
+}
+
+###
+DELETE http://localhost:3000/api/users/0e79751e-975a-422f-8dee-f6b4407c388f
+Content-Type: application/json
