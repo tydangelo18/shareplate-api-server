@@ -1,0 +1,32 @@
+GET http://localhost:3000/api/posts/user/1bc1d72c-3d9a-4144-86d9-51617b80058b
+Content-Type: application/json
+
+###
+GET http://localhost:3000/api/posts/aa7a0c96-29ab-4c35-ad75-16720a8602dc
+Content-Type: application/json
+
+###
+POST http://localhost:3000/api/posts
+Content-Type: application/json
+
+{
+  "user_id": "1bc1d72c-3d9a-4144-86d9-51617b80058b",
+  "rating": 4,
+  "caption": "New post",
+  "location": "Somewhere, TX",
+  "like_count": 1,
+  "comment_count": 0
+}
+
+###
+PUT http://localhost:3000/api/posts/aa7a0c96-29ab-4c35-ad75-16720a8602dc
+Content-Type: application/json
+
+{
+  "caption": "Tapasssssss",
+  "location": "Barcelona, ESP"
+}
+
+###
+DELETE http://localhost:3000/api/posts/e11d10fd-905e-42d0-897f-86e922d3dc5f
+Content-Type: application/json
