@@ -1,3 +1,4 @@
+import { hashPassword } from "../utils/password";
 import { User } from "../interfaces/user";
 import client from "../utils/db";
 import { v4 as uuidv4 } from "uuid";
@@ -12,13 +13,21 @@ export const findUserById = async (id: string): Promise<User | null> => {
   return result.rows[0] || null;
 };
 
+export const findUserByEmail = async (email: string): Promise<User | null> => {
+  const result = await client.query(
+    `SELECT * FROM users WHERE email='${email}'`
+  );
+  return result.rows[0] || null;
+};
+
 export const createUser = async (user: User): Promise<void> => {
   const id = uuidv4();
   const newDate = new Date().toISOString();
+  const hashedPassword = await hashPassword(user.password);
 
   await client.query(
     `INSERT INTO users (id, first_name, last_name, email, password, created_date, modified_date) 
-    VALUES ('${id}', '${user.first_name}', '${user.last_name}', '${user.email}', '${user.password}', '${newDate}', '${newDate}')`
+    VALUES ('${id}', '${user.first_name}', '${user.last_name}', '${user.email}', '${hashedPassword}', '${newDate}', '${newDate}')`
   );
 };
 

@@ -18,9 +18,6 @@ export const connectDB = async () => {
   } catch (error) {
     console.error("Database connection failed:", error);
   } 
-  // finally {
-  //   await client.end();
-  // }
 };
 
 export default client;
