@@ -26,5 +26,5 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3000/api/users/0e79751e-975a-422f-8dee-f6b4407c388f
+DELETE http://localhost:3000/api/users/0843dc16-d5d5-42fa-a3d6-3c31c5a0a201
 Content-Type: application/json
