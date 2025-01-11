@@ -27,7 +27,7 @@ export const findAllLikesByPost = async (
   post_id: string
 ): Promise<Like[] | null> => {
   const result = await client.query(
-    `SELECT 
+    `SELECT
     l.id AS like_id,
     u.first_name,
     u.last_name,
