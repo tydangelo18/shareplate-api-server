@@ -1,0 +1,28 @@
+GET http://localhost:3000/api/comments/user/1bc1d72c-3d9a-4144-86d9-51617b80058b
+Content-Type: application/json
+
+###
+GET http://localhost:3000/api/comments/post/2f0b2a95-70bd-452e-a5c7-e7f0b8cf6213
+Content-Type: application/json
+
+###
+POST http://localhost:3000/api/comments
+Content-Type: application/json
+
+{
+  "user_id": "1bc1d72c-3d9a-4144-86d9-51617b80058b",
+  "post_id": "2f0b2a95-70bd-452e-a5c7-e7f0b8cf6213",
+  "content": "This is so cool"
+}
+
+###
+PUT http://localhost:3000/api/comments/3ed7be19-f422-4880-a0a6-3ad9fb46cd41
+Content-Type: application/json
+
+{
+  "content": "This is so sick"
+}
+
+###
+DELETE http://localhost:3000/api/comments/3ed7be19-f422-4880-a0a6-3ad9fb46cd41/2f0b2a95-70bd-452e-a5c7-e7f0b8cf6213
+Content-Type: application/json
