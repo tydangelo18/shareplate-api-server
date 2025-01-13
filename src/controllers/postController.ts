@@ -6,7 +6,6 @@ import {
   updatePostById,
   deletePostById,
 } from "../services/postService";
-import { Post } from "../interfaces/post";
 
 export const getAllPostsByUser = async (
   req: Request,
@@ -57,10 +56,10 @@ export const createPost = async (
   res: Response,
   _next: NextFunction
 ): Promise<void> => {
-  const post: Post = req.body;
+  const { post, recipe } = req.body;
 
   try {
-    await createNewPost(post);
+    await createNewPost(post, recipe);
 
     res.status(200).json({ message: "Post created successfully" });
   } catch (error: any) {
