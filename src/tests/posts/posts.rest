@@ -2,7 +2,7 @@ GET http://localhost:3000/api/posts/user/1bc1d72c-3d9a-4144-86d9-51617b80058b
 Content-Type: application/json
 
 ###
-GET http://localhost:3000/api/posts/aa7a0c96-29ab-4c35-ad75-16720a8602dc
+GET http://localhost:3000/api/posts/6c67a857-335b-484e-ae30-601c1e3a591a
 Content-Type: application/json
 
 ###
@@ -10,23 +10,28 @@ POST http://localhost:3000/api/posts
 Content-Type: application/json
 
 {
-  "user_id": "1bc1d72c-3d9a-4144-86d9-51617b80058b",
-  "rating": 4,
-  "caption": "New post",
-  "location": "Somewhere, TX",
-  "like_count": 1,
-  "comment_count": 0
+  "post": {
+    "user_id": "1bc1d72c-3d9a-4144-86d9-51617b80058b",
+    "rating": 3,
+    "caption": "Soup",
+    "location": "Tejas"
+  },
+  "recipe": {
+    "type": "Vegan",
+    "link": "https://recipe-link.com",
+    "ingredients": "1 cup flour",
+    "content": "Mix ingredients and bake."
+  }
 }
 
 ###
-PUT http://localhost:3000/api/posts/aa7a0c96-29ab-4c35-ad75-16720a8602dc
+PUT http://localhost:3000/api/posts/6c67a857-335b-484e-ae30-601c1e3a591a
 Content-Type: application/json
 
 {
-  "caption": "Tapasssssss",
-  "location": "Barcelona, ESP"
+  "post": { "caption": "yummmmmm" }
 }
 
 ###
-DELETE http://localhost:3000/api/posts/e11d10fd-905e-42d0-897f-86e922d3dc5f
+DELETE http://localhost:3000/api/posts/e5c17a8d-e16e-4ef6-898d-1b3886b09299
 Content-Type: application/json
