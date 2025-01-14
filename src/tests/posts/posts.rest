@@ -23,8 +23,11 @@ Content-Type: application/json
   "recipe": {
     "type": "Vegan",
     "link": "https://recipe-link.com",
-    "ingredients": "broth",
-    "content": "Mix ingredients and broil."
+     "content": "Mix ingredients and broil.",
+    "ingredients": [
+     { "name": "Tomato", "quantity": 2, "unit": "cups" },
+     { "name": "Basil", "quantity": 5, "unit": "leaves" }
+   ]
   }
 }
 

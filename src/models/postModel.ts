@@ -113,7 +113,11 @@ export const createPostByUser = async (
   if (recipe) {
     await client.query(
       `INSERT INTO recipes (id, post_id, type, link, ingredients, content, created_date, modified_date)
-          VALUES ('${recipeId}', '${postId}', '${recipe.type}', '${recipe.link}', '${recipe.ingredients}', '${recipe.content}', '${newDate}', '${newDate}')`
+          VALUES ('${recipeId}', '${postId}', '${recipe.type}', '${
+        recipe.link
+      }', '${JSON.stringify(recipe.ingredients)}', '${
+        recipe.content
+      }', '${newDate}', '${newDate}')`
     );
   }
 };
