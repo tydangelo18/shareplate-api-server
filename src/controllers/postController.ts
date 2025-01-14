@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import {
   getPostsByUser,
   getPostById,
+  getPostsForFeedByUser,
   createNewPost,
   updatePostById,
   deletePostById,
@@ -47,6 +48,28 @@ export const getPost = async (
     res.status(200).json(post);
   } catch (error: any) {
     console.error(`Error fetching post: ${error.message}`);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getAllPostsForFeedByUser = async (
+  req: Request,
+  res: Response,
+  _next: NextFunction
+): Promise<void> => {
+  const { user_id } = req.params;
+
+  try {
+    const posts = await getPostsForFeedByUser(user_id);
+
+    if (!posts) {
+      res.status(404).json({ error: "No feed posts found for this user" });
+      return;
+    }
+
+    res.status(200).json(posts);
+  } catch (error: any) {
+    console.error(`Error fetching feed posts by user: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 };

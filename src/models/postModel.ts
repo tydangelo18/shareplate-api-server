@@ -2,6 +2,7 @@ import client from "../utils/db";
 import { v4 as uuidv4 } from "uuid";
 import { Post } from "../interfaces/post";
 import { Recipe } from "../interfaces/recipe";
+import { ConnectionStatus } from "src/utils/enums";
 
 export const findAllPostsByUser = async (
   user_id: string
@@ -57,6 +58,39 @@ WHERE
     p.id='${id}';`
   );
   return result.rows[0] || null;
+};
+
+export const findAllPostsForFeedByUser = async (
+  user_id: string
+): Promise<Post[] | null> => {
+  const result = await client.query(
+    `SELECT
+    p.id AS post_id,
+    p.post_picture,
+    p.rating,
+    p.caption,
+    p.location,
+    p.like_count,
+    p.comment_count,
+    p.created_date,
+    r.id AS recipe_id,
+    r.post_id AS recipe_post_id,
+    r.type AS recipe_type,
+    r.link AS recipe_link,
+    r.ingredients AS recipe_ingredients,
+    r.content AS recipe_content
+FROM
+    posts p
+LEFT JOIN
+    recipes r ON p.id = r.post_id
+JOIN
+    connections c ON (c.user_id = p.user_id OR c.requester_id = p.user_id)
+WHERE
+    c.status='${ConnectionStatus.ACCEPTED}'
+AND (c.user_id='${user_id}' OR c.requester_id='${user_id}')
+AND p.user_id != '${user_id}';`
+  );
+  return result.rows;
 };
 
 export const createPostByUser = async (
