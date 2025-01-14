@@ -6,12 +6,13 @@ import {
   updateUser,
   deleteUser,
 } from "../controllers/userController";
+import { signUpValidator, handleValidationErrors } from "src/middlewares/validator";
 
 const router = Router();
 
 router.get("/", getAllUsers);
 router.get("/:id", getUser);
-router.post("/", createUser);
+router.post("/", [...signUpValidator, handleValidationErrors], createUser);
 router.put("/:id", updateUser);
 router.delete("/:id", deleteUser);
 
