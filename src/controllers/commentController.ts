@@ -86,19 +86,19 @@ export const deleteComment = async (
 };
 
 export const updateComment = async (
-    req: Request,
-    res: Response,
-    _next: NextFunction
-  ): Promise<void> => {
-    const { id } = req.params;
-    const updates = req.body;
-  
-    try {
-      await updateCommentById(id, updates);
-  
-      res.status(200).json({ message: `Comment ${id} updated successfully` });
-    } catch (error: any) {
-      console.error(`Error updating comment: ${error.message}`);
-      res.status(500).json({ error: error.message });
-    }
-  };
+  req: Request,
+  res: Response,
+  _next: NextFunction
+): Promise<void> => {
+  const { id } = req.params;
+  const updates = req.body;
+
+  try {
+    await updateCommentById(id, updates);
+
+    res.status(200).json({ message: `Comment ${id} updated successfully` });
+  } catch (error: any) {
+    console.error(`Error updating comment: ${error.message}`);
+    res.status(500).json({ error: error.message });
+  }
+};

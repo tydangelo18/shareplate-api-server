@@ -10,10 +10,10 @@ POST http://localhost:3000/api/users
 Content-Type: application/json
 
 {
-  "first_name": "Bre",
-  "last_name": "Wee",
-  "email": "bre@shareplate.com",
-  "password": "123"
+  "first_name": "Lenny",
+  "last_name": "Bear",
+  "email": "lb@shareplate.com",
+  "password": "Secret1!"
 }
 
 ###

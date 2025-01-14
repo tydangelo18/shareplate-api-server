@@ -49,12 +49,13 @@ export const getUser = async (
   }
 };
 
-export const createUser = async (
+export const createUser =  async (
   req: Request,
   res: Response,
   _next: NextFunction
 ): Promise<void> => {
   const user: User = req.body;
+
   try {
     await registerUser(user);
     res.status(201).json({ message: "User created successfully" });
