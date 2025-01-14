@@ -15,7 +15,7 @@ Content-Type: application/json
 }
 
 ###
-PUT http://localhost:3000/api/connections/requests/92aba31c-a480-4a36-910d-688dc990eb96
+PUT http://localhost:3000/api/connections/requests/b0ee54e3-1434-4eac-9c25-3cd8ba023db0
 Content-Type: application/json
 
 ###

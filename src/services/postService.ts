@@ -1,6 +1,7 @@
 import {
   findAllPostsByUser,
   findPostById,
+  findAllPostsForFeedByUser,
   createPostByUser,
   deletePostByUser,
   updatePostByUser,
@@ -16,6 +17,12 @@ export const getPostsByUser = async (
 
 export const getPostById = async (id: string): Promise<Post | null> => {
   return await findPostById(id);
+};
+
+export const getPostsForFeedByUser = async (
+  user_id: string
+): Promise<Post[] | null> => {
+  return await findAllPostsForFeedByUser(user_id);
 };
 
 export const createNewPost = async (
