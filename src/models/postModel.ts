@@ -2,7 +2,7 @@ import client from "../utils/db";
 import { v4 as uuidv4 } from "uuid";
 import { Post } from "../interfaces/post";
 import { Recipe } from "../interfaces/recipe";
-import { ConnectionStatus } from "src/utils/enums";
+import { ConnectionStatus } from "../utils/enums";
 
 export const findAllPostsByUser = async (
   user_id: string

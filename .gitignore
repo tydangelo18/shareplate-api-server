@@ -1,4 +1,36 @@
-.env
+# Node Modules
 /node_modules
-# Typescript
+
+# Environment Variables
+.env
+.env.*
+
+# Build outputs
 dist/
+build/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# System files
+.DS_Store
+
+# Jest files
+coverage/
+.jest/
+
+# IDE/editor files
+.vscode/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Temporary files
+tmp/
+
+# Database files
+*.sql

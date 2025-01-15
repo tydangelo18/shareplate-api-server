@@ -5,7 +5,7 @@ import {
   createNewLike,
   deleteLikeById,
 } from "../services/likeService";
-import { Like } from "src/interfaces/like";
+import { Like } from "../interfaces/like";
 
 export const getAllLikesByUser = async (
   req: Request,
