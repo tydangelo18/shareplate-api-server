@@ -1,4 +1,4 @@
-import { RecipeType } from "src/utils/enums";
+import { RecipeType } from "@utils/enums";
 
 export interface Recipe {
   id: string;

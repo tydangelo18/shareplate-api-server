@@ -6,7 +6,7 @@ import {
   deleteConnection,
   denyConnectionRequest,
   acceptConnectionRequest,
-} from "../../../controllers/connectionController";
+} from "@controllers/connectionController";
 import {
   getConnectionsByUser,
   getConnectionRequestsByUser,
@@ -14,9 +14,9 @@ import {
   deleteConnectionById,
   deleteConnectionRequestById,
   updateConnectionRequestById,
-} from "../../../services/connectionService";
+} from "@services/connectionService";
 
-jest.mock("../../../services/connectionService");
+jest.mock("@services/connectionService");
 
 const mockRequest = (params: any, body: any = {}): Partial<Request> => ({
   params,

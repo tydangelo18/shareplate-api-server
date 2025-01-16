@@ -6,7 +6,7 @@ import {
   deleteConnection,
   denyConnectionRequest,
   acceptConnectionRequest,
-} from "../controllers/connectionController";
+} from "@controllers/connectionController";
 
 const router = Router();
 

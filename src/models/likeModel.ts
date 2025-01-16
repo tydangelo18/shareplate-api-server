@@ -1,6 +1,6 @@
-import client from "../utils/db";
+import client from "@utils/db";
 import { v4 as uuidv4 } from "uuid";
-import { Like } from "../interfaces/like";
+import { Like } from "@interfaces/like";
 
 export const findAllLikesByUser = async (
   user_id: string

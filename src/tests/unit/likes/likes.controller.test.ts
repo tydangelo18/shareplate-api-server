@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
-import * as likeService from "../../../services/likeService";
+import * as likeService from "@services/likeService";
 import {
   getAllLikesByUser,
   getAllLikesByPost,
   createLike,
   deleteLike,
-} from "../../../controllers/likeController";
+} from "@controllers/likeController";
 
-jest.mock("../../../services/likeService");
+jest.mock("@services/likeService");
 
 describe("Like Controller", () => {
   let req: Partial<Request>;

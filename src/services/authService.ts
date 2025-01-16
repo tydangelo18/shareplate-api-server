@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
-import { findUserByEmail } from "../models/userModel"
-import { JWT_SECRET, JWT_EXPIRES_IN } from '../utils/jwt';
-import { verifyPassword } from "../utils/password";
+import { findUserByEmail } from "@models/userModel"
+import { JWT_SECRET, JWT_EXPIRES_IN } from '@utils/jwt';
+import { verifyPassword } from "@utils/password";
 
 export async function login(email: string, password: string) {
     const user = await findUserByEmail(email)

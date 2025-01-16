@@ -1,7 +1,13 @@
 import { Request, Response } from "express";
-import { getAllUsers, getUser, createUser, updateUser, deleteUser } from "../../../controllers/userController";
-import * as userService from "../../../services/userService";
-import { User } from "../../../interfaces/user";
+import {
+  getAllUsers,
+  getUser,
+  createUser,
+  updateUser,
+  deleteUser,
+} from "@controllers/userController";
+import * as userService from "@services/userService";
+import { User } from "@interfaces/user";
 
 describe("createUser Controller", () => {
   it("should return 201 and a success message when the user is created", async () => {
@@ -128,7 +134,10 @@ describe("updateUser", () => {
   it("should return 200 and a success message when the user is updated", async () => {
     jest.spyOn(userService, "updateUserById").mockResolvedValueOnce();
 
-    const req = { params: { id: "1" }, body: { name: "Updated Name" } } as unknown as Request;
+    const req = {
+      params: { id: "1" },
+      body: { name: "Updated Name" },
+    } as unknown as Request;
     const res = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn(),
@@ -136,9 +145,13 @@ describe("updateUser", () => {
 
     await updateUser(req, res, jest.fn());
 
-    expect(userService.updateUserById).toHaveBeenCalledWith("1", { name: "Updated Name" });
+    expect(userService.updateUserById).toHaveBeenCalledWith("1", {
+      name: "Updated Name",
+    });
     expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith({ message: "User 1 updated successfully" });
+    expect(res.json).toHaveBeenCalledWith({
+      message: "User 1 updated successfully",
+    });
   });
 });
 
@@ -156,11 +169,15 @@ describe("deleteUser", () => {
 
     expect(userService.deleteUserById).toHaveBeenCalledWith("1");
     expect(res.status).toHaveBeenCalledWith(200);
-    expect(res.json).toHaveBeenCalledWith({ message: "User 1 deleted successfully" });
+    expect(res.json).toHaveBeenCalledWith({
+      message: "User 1 deleted successfully",
+    });
   });
 
   it("should return 500 if there is an error during deletion", async () => {
-    jest.spyOn(userService, "deleteUserById").mockRejectedValueOnce(new Error("Delete error"));
+    jest
+      .spyOn(userService, "deleteUserById")
+      .mockRejectedValueOnce(new Error("Delete error"));
 
     const req = { params: { id: "1" } } as unknown as Request;
     const res = {

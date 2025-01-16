@@ -5,7 +5,7 @@ import {
   createPost,
   updatePost,
   deletePost,
-} from "../../../controllers/postController";
+} from "@controllers/postController";
 import {
   getPostsByUser,
   getPostById,
@@ -13,9 +13,9 @@ import {
   createNewPost,
   updatePostById,
   deletePostById,
-} from "../../../services/postService";
+} from "@services/postService";
 
-jest.mock("../../../services/postService");
+jest.mock("@services/postService");
 
 describe("Post Controllers", () => {
   let req: any;

@@ -6,7 +6,7 @@ import {
   createNewPost,
   updatePostById,
   deletePostById,
-} from "../services/postService";
+} from "@services/postService";
 
 export const getAllPostsByUser = async (
   req: Request,

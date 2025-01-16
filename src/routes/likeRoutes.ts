@@ -4,7 +4,7 @@ import {
   getAllLikesByPost,
   createLike,
   deleteLike,
-} from "../controllers/likeController";
+} from "@controllers/likeController";
 
 const router = Router();
 

@@ -5,8 +5,8 @@ import {
   createNewComment,
   deleteCommentById,
   updateCommentById,
-} from "../services/commentService";
-import { Comment } from "../interfaces/comment";
+} from "@services/commentService";
+import { Comment } from "@interfaces/comment";
 
 export const getAllCommentsByUser = async (
   req: Request,

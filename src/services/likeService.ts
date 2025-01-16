@@ -6,8 +6,8 @@ import {
   incrementLikeCount,
   deleteLikeByPost,
   decrementLikeCount,
-} from "../models/likeModel";
-import { Like } from "../interfaces/like";
+} from "@models/likeModel";
+import { Like } from "@interfaces/like";
 
 export const getLikesByUser = async (
   user_id: string
@@ -27,7 +27,7 @@ export const createNewLike = async (like: Like): Promise<void> => {
   if (likeExists) {
     throw new Error(`User ${like.user_id} has already liked post ${like.post_id}`);
   }
-  
+
   await createLikeByPost(like);
   await incrementLikeCount(like);
 };

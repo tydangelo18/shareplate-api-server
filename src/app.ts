@@ -1,11 +1,11 @@
 import express, { Express } from "express";
-import userRoutes from "./routes/userRoutes";
-import authRoutes from "./routes/authRoutes";
-import postRoutes from "./routes/postRoutes";
-import likeRoutes from "./routes/likeRoutes";
-import commentRoutes from "./routes/commentRoutes";
-import connectionRoutes from "./routes/connectionRoutes";
-import { errorHandler } from "./middlewares/errorHandler";
+import userRoutes from "@routes/userRoutes";
+import authRoutes from "@routes/authRoutes";
+import postRoutes from "@routes/postRoutes";
+import likeRoutes from "@routes/likeRoutes";
+import commentRoutes from "@routes/commentRoutes";
+import connectionRoutes from "@routes/connectionRoutes";
+import { errorHandler } from "@middlewares/errorHandler";
 
 const app: Express = express();
 

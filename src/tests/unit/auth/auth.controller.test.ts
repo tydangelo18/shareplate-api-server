@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { login } from "../../../controllers/authController";
-import * as authService from "../../../services/authService";
+import { login } from "@controllers/authController";
+import * as authService from "@services/authService";
 
 describe("login Controller", () => {
   it("should return 200 and a success message when the user is logged in", async () => {

@@ -5,9 +5,9 @@ import {
   createPostByUser,
   deletePostByUser,
   updatePostByUser,
-} from "../models/postModel";
-import { Post } from "../interfaces/post";
-import { Recipe } from "../interfaces/recipe";
+} from "@models/postModel";
+import { Post } from "@interfaces/post";
+import { Recipe } from "@interfaces/recipe";
 
 export const getPostsByUser = async (
   user_id: string

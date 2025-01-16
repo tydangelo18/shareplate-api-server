@@ -4,8 +4,8 @@ import {
   createUser,
   updateUser,
   deleteUser,
-} from "../models/userModel";
-import { User } from "../interfaces/user";
+} from "@models/userModel";
+import { User } from "@interfaces/user";
 
 export const getUsers = async (): Promise<User[] | null> => {
   return await findAllUsers();

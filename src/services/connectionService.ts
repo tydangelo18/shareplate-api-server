@@ -5,8 +5,8 @@ import {
   deleteConnectionByUser,
   deleteConnectionRequestByUser,
   updateConnectionRequestByUser,
-} from "../models/connectionModel";
-import { Connection } from "../interfaces/connection";
+} from "@models/connectionModel";
+import { Connection } from "@interfaces/connection";
 
 export const getConnectionsByUser = async (
   user_id: string

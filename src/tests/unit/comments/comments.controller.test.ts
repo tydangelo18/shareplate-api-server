@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import * as commentService from "../../../services/commentService";
+import * as commentService from "@services/commentService";
 import {
   getAllCommentsByPost,
   getAllCommentsByUser,
   createComment,
   updateComment,
   deleteComment,
-} from "../../../controllers/commentController";
+} from "@controllers/commentController";
 
-jest.mock("../../../services/commentService");
+jest.mock("@services/commentService");
 
 describe("Comment Controller", () => {
   let req: Partial<Request>;
@@ -206,23 +206,23 @@ describe("Comment Controller", () => {
     });
 
     it("should return 500 if an error occurs during comment update", async () => {
-        const req = {
-          params: { id: "1", post_id: "456" },
-        } as Partial<Request>;
-  
-        const res = {
-          status: jest.fn().mockReturnThis(),
-          json: jest.fn(),
-        } as Partial<Response>;
-  
-        (commentService.deleteCommentById as jest.Mock).mockRejectedValue(
-          new Error("Database error")
-        );
-  
-        await deleteComment(req as Request, res as Response, jest.fn());
-  
-        expect(res.status).toHaveBeenCalledWith(500);
-        expect(res.json).toHaveBeenCalledWith({ error: "Database error" });
-      });
+      const req = {
+        params: { id: "1", post_id: "456" },
+      } as Partial<Request>;
+
+      const res = {
+        status: jest.fn().mockReturnThis(),
+        json: jest.fn(),
+      } as Partial<Response>;
+
+      (commentService.deleteCommentById as jest.Mock).mockRejectedValue(
+        new Error("Database error")
+      );
+
+      await deleteComment(req as Request, res as Response, jest.fn());
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: "Database error" });
+    });
   });
 });

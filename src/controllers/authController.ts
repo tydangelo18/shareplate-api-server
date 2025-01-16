@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import * as authService from "../services/authService";
+import * as authService from "@services/authService";
 
 export const login = async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
   const { email, password } = req.body;
