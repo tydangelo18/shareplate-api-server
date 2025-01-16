@@ -1,6 +1,7 @@
 import {
   findAllLikesByUser,
   findAllLikesByPost,
+  isLikeAlreadyExists,
   createLikeByPost,
   incrementLikeCount,
   deleteLikeByPost,
@@ -21,6 +22,12 @@ export const getLikesByPost = async (
 };
 
 export const createNewLike = async (like: Like): Promise<void> => {
+  const likeExists = await isLikeAlreadyExists(like);
+
+  if (likeExists) {
+    throw new Error(`User ${like.user_id} has already liked post ${like.post_id}`);
+  }
+  
   await createLikeByPost(like);
   await incrementLikeCount(like);
 };

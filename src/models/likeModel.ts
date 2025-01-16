@@ -58,6 +58,13 @@ SET like_count = like_count + 1
 WHERE id='${like.post_id}'`);
 };
 
+export const isLikeAlreadyExists = async (like: Like): Promise<boolean> => {
+  const result = await client.query(`
+    SELECT id FROM likes
+    WHERE user_id='${like.user_id}' AND post_id='${like.post_id}'`);
+  return result.rows.length > 0;
+};
+
 export const deleteLikeByPost = async (id: string): Promise<void> => {
   await client.query(`DELETE FROM likes WHERE id='${id}'`);
 };

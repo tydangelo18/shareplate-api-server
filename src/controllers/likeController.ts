@@ -62,8 +62,12 @@ export const createLike = async (
 
     res.status(200).json({ message: `Like created successfully` });
   } catch (error: any) {
-    console.error(`Error liking post: ${error.message}`);
-    res.status(500).json({ error: error.message });
+    if (error.message.includes("already liked")) {
+      res.status(400).json({ error: error.message });
+    } else {
+      console.error(`Error liking post: ${error.message}`);
+      res.status(500).json({ error: error.message });
+    }
   }
 };
 
