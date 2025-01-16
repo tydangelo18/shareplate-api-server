@@ -1,0 +1,60 @@
+name: Shareplate Api Server CI Pipeline
+
+on:
+  push:
+    branches:
+      - development
+  pull_request:
+    branches:
+      - development
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: ${{ secrets.DB_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.DB_PASSWORD }}
+          POSTGRES_DATABASE: ${{ secrets.DB_DATABASE }}
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 3
+        volumes:
+          - postgres-data:/var/lib/postgresql/data
+
+    steps:
+      # Checkout code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Set up Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      # Install Dependencies
+      - name: Install Dependencies
+        run: npm install
+
+      # Compile Typescript
+      - name: Build
+        run: npm run build
+
+      # Run Tests
+      - name: Run Tests
+        env:
+          DB_USER: ${{ secrets.TEST_DB_USER }}
+          DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
+          DB_NAME: ${{ secrets.TEST_DB_NAME }}
+        run: npm run test
+
+      # Lint the code
+      - name: Lint
+        run: npm run lint

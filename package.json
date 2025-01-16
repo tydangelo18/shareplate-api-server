@@ -4,10 +4,11 @@
   "description": "Food sharing social media app api server.",
   "main": "dist/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "build": "tsc --project tsconfig.json && tsc-alias -p tsconfig.json",
     "start": "node dist/server.js",
-    "dev": "nodemon -r tsconfig-paths/register src/server.ts"
+    "dev": "nodemon -r tsconfig-paths/register src/server.ts",
+    "lint": "eslint . --ext .ts"
   },
   "keywords": [],
   "author": "Ty D'Angelo",
