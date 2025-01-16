@@ -29,11 +29,13 @@ describe("Comment Controller", () => {
   describe("getAllCommentsByUser", () => {
     it("should return comments for a user", async () => {
       const mockComments = [
-        { id: "1", content: "Test comment", user_id: "123" },
+        { id: "1", content: "Test comment", user_id: "123", post_id: "456" },
       ];
-      (commentService.getCommentsByUser as jest.Mock).mockResolvedValue(
-        mockComments
-      );
+      
+      // (commentService.getCommentsByUser as jest.Mock).mockResolvedValue(
+      //   mockComments
+      // );
+      jest.spyOn(commentService, 'getCommentsByUser').mockResolvedValue(mockComments);
 
       req.params = { user_id: "123" };
 

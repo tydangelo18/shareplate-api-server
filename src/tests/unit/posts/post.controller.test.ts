@@ -34,6 +34,7 @@ describe("Post Controllers", () => {
     it("should return 200 with posts if found", async () => {
       req.params.user_id = "1";
       const mockPosts = [{ id: "1", title: "Post 1" }];
+
       (getPostsByUser as jest.Mock).mockResolvedValue(mockPosts);
 
       await getAllPostsByUser(req, res, jest.fn());
