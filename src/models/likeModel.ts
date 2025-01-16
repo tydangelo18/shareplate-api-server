@@ -1,6 +1,6 @@
-import client from "../utils/db";
+import client from "@utils/db";
 import { v4 as uuidv4 } from "uuid";
-import { Like } from "../interfaces/like";
+import { Like } from "@interfaces/like";
 
 export const findAllLikesByUser = async (
   user_id: string
@@ -56,6 +56,13 @@ export const incrementLikeCount = async (like: Like): Promise<void> => {
   UPDATE posts
 SET like_count = like_count + 1
 WHERE id='${like.post_id}'`);
+};
+
+export const isLikeAlreadyExists = async (like: Like): Promise<boolean> => {
+  const result = await client.query(`
+    SELECT id FROM likes
+    WHERE user_id='${like.user_id}' AND post_id='${like.post_id}'`);
+  return result.rows.length > 0;
 };
 
 export const deleteLikeByPost = async (id: string): Promise<void> => {

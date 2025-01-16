@@ -6,8 +6,8 @@ import {
   deleteCommentByPost,
   decrementCommentCount,
   updateCommentByPost,
-} from "../models/commentModel";
-import { Comment } from "../interfaces/comment";
+} from "@models/commentModel";
+import { Comment } from "@interfaces/comment";
 
 export const getCommentsByUser = async (
   user_id: string

@@ -5,7 +5,7 @@ import {
   createUser,
   updateUser,
   deleteUser,
-} from "../controllers/userController";
+} from "@controllers/userController";
 import { signUpValidator, handleValidationErrors } from "src/middlewares/validator";
 
 const router = Router();

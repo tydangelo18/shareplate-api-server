@@ -6,8 +6,8 @@ import {
   deleteConnectionById,
   deleteConnectionRequestById,
   updateConnectionRequestById,
-} from "../services/connectionService";
-import { Connection } from "../interfaces/connection";
+} from "@services/connectionService";
+import { Connection } from "@interfaces/connection";
 
 export const getAllConnectionsByUser = async (
   req: Request,

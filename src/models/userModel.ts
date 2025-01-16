@@ -1,6 +1,6 @@
-import { hashPassword } from "../utils/password";
-import { User } from "../interfaces/user";
-import client from "../utils/db";
+import { hashPassword } from "@utils/password";
+import { User } from "@interfaces/user";
+import client from "@utils/db";
 import { v4 as uuidv4 } from "uuid";
 
 export const findAllUsers = async (): Promise<User[] | null> => {

@@ -1,4 +1,4 @@
-import { ConnectionStatus } from "../utils/enums";
+import { ConnectionStatus } from "@utils/enums";
 
 export interface Connection {
   id: string;

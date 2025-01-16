@@ -2,14 +2,14 @@ import { Router } from "express";
 import {
   commentValidator,
   handleValidationErrors,
-} from "src/middlewares/validator";
+} from "@middlewares/validator";
 import {
   getAllCommentsByUser,
   getAllCommentsByPost,
   createComment,
   deleteComment,
   updateComment,
-} from "../controllers/commentController";
+} from "@controllers/commentController";
 
 const router = Router();
 

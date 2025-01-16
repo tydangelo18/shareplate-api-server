@@ -5,8 +5,8 @@ import {
   registerUser,
   updateUserById,
   deleteUserById,
-} from "../services/userService";
-import { User } from "../interfaces/user";
+} from "@services/userService";
+import { User } from "@interfaces/user";
 
 export const getAllUsers = async (
   _req: Request,
