@@ -53,4 +53,5 @@ jobs:
           DB_USER: ${{ secrets.TEST_DB_USER }}
           DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
           DB_NAME: ${{ secrets.TEST_DB_NAME }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
         run: npm run test
