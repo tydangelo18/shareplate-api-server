@@ -26,8 +26,12 @@ describe("Like Controller", () => {
   });
 
   describe("getAllLikesByUser", () => {
-    it("should return likes for a user", async () => {
-      const mockLikes = [{ id: "1", user_id: "123", post_id: "456" }];
+    it("should return likes by a user", async () => {
+      const mockLikes = [
+        { id: "1", user_id: "123", post_id: "456" },
+        { id: "2", user_id: "123", post_id: "789" },
+        { id: "3", user_id: "123", post_id: "012" },
+      ];
       jest.spyOn(likeService, "getLikesByUser").mockResolvedValue(mockLikes);
 
       req.params = { user_id: "123" };
@@ -38,7 +42,7 @@ describe("Like Controller", () => {
       expect(res.json).toHaveBeenCalledWith(mockLikes);
     });
 
-    it("should return 404 if no likes are found", async () => {
+    it("should return 404 if no likes are found by a user", async () => {
       jest.spyOn(likeService, "getLikesByUser").mockResolvedValue(null);
 
       req.params = { user_id: "123" };
@@ -51,23 +55,27 @@ describe("Like Controller", () => {
       });
     });
 
-    it("should handle errors", async () => {
+    it("should return 500 if an error occurs during getting likes by user", async () => {
       jest
         .spyOn(likeService, "getLikesByUser")
-        .mockRejectedValue(new Error("Database error"));
+        .mockRejectedValue(new Error("Internal server error"));
 
       req.params = { user_id: "123" };
 
       await getAllLikesByUser(req as Request, res as Response, jest.fn());
 
       expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: "Database error" });
+      expect(res.json).toHaveBeenCalledWith({ error: "Internal server error" });
     });
   });
 
   describe("getAllLikesByPost", () => {
-    it("should return likes for a post", async () => {
-      const mockLikes = [{ id: "1", user_id: "123", post_id: "456" }];
+    it("should return likes on a post", async () => {
+      const mockLikes = [
+        { id: "1", user_id: "123", post_id: "456" },
+        { id: "2", user_id: "789", post_id: "456" },
+        { id: "2", user_id: "012", post_id: "456" },
+      ];
       jest.spyOn(likeService, "getLikesByPost").mockResolvedValue(mockLikes);
 
       req.params = { post_id: "456" };
@@ -78,7 +86,7 @@ describe("Like Controller", () => {
       expect(res.json).toHaveBeenCalledWith(mockLikes);
     });
 
-    it("should return 404 if no likes are found", async () => {
+    it("should return 404 if no likes are found on a post", async () => {
       jest.spyOn(likeService, "getLikesByPost").mockResolvedValue(null);
 
       req.params = { post_id: "456" };
@@ -91,17 +99,17 @@ describe("Like Controller", () => {
       });
     });
 
-    it("should handle errors", async () => {
+    it("should return 500 if an error occurs during getting likes on a post", async () => {
       jest
         .spyOn(likeService, "getLikesByPost")
-        .mockRejectedValue(new Error("Database error"));
+        .mockRejectedValue(new Error("Internal server error"));
 
       req.params = { post_id: "456" };
 
       await getAllLikesByPost(req as Request, res as Response, jest.fn());
 
       expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: "Database error" });
+      expect(res.json).toHaveBeenCalledWith({ error: "Internal server error" });
     });
   });
 
@@ -120,7 +128,7 @@ describe("Like Controller", () => {
       });
     });
 
-    it("should handle errors", async () => {
+    it("should return 500 if an error occurs during creating a new like", async () => {
       (likeService.createNewLike as jest.Mock).mockRejectedValue(
         new Error("Error creating like")
       );
@@ -138,9 +146,9 @@ describe("Like Controller", () => {
   });
 
   describe("deleteLike", () => {
-    it("should delete a like successfully", async () => {
+    it("should delete a like", async () => {
       const req = {
-        params: { id: "1", post_id: "123" },
+        params: { id: "1", post_id: "123", user_id: "456" },
       } as Partial<Request>;
 
       const res = {
@@ -160,9 +168,9 @@ describe("Like Controller", () => {
       });
     });
 
-    it("should return 500 if an error occurs during like deletion", async () => {
+    it("should return 500 if an error occurs during deleting a like", async () => {
       const req = {
-        params: { id: "1", post_id: "123" },
+        params: { id: "1", post_id: "123", user_id: "456" },
       } as Partial<Request>;
 
       const res = {
@@ -172,12 +180,12 @@ describe("Like Controller", () => {
 
       jest
         .spyOn(likeService, "deleteLikeById")
-        .mockRejectedValue(new Error("Database error"));
+        .mockRejectedValue(new Error("Internal server error"));
 
       await deleteLike(req as Request, res as Response, jest.fn());
 
       expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: "Database error" });
+      expect(res.json).toHaveBeenCalledWith({ error: "Internal server error" });
     });
   });
 });

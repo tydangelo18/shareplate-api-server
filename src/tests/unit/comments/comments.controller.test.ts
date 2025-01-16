@@ -26,10 +26,12 @@ describe("Comment Controller", () => {
     jest.clearAllMocks();
   });
 
-  describe("getAllCommentsByUser Controller", () => {
+  describe("getAllCommentsByUser", () => {
     it("should return comments for a user", async () => {
       const mockComments = [
         { id: "1", content: "Test comment", user_id: "123", post_id: "456" },
+        { id: "2", content: "Test comment 2", user_id: "123", post_id: "789" },
+        { id: "3", content: "Test comment 3", user_id: "123", post_id: "012" },
       ];
       jest
         .spyOn(commentService, "getCommentsByUser")
@@ -43,7 +45,7 @@ describe("Comment Controller", () => {
       expect(res.json).toHaveBeenCalledWith(mockComments);
     });
 
-    it("should return 404 if no comments are found", async () => {
+    it("should return 404 if no comments are found for a user", async () => {
       jest.spyOn(commentService, "getCommentsByUser").mockResolvedValue(null);
 
       req.params = { user_id: "123" };
@@ -59,21 +61,23 @@ describe("Comment Controller", () => {
     it("should return 500 if an error occurs during getting comments by user", async () => {
       jest
         .spyOn(commentService, "getCommentsByUser")
-        .mockRejectedValue(new Error("Database error"));
+        .mockRejectedValue(new Error("Internal server error"));
 
       req.params = { user_id: "123" };
 
       await getAllCommentsByUser(req as Request, res as Response, jest.fn());
 
       expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: "Database error" });
+      expect(res.json).toHaveBeenCalledWith({ error: "Internal server error" });
     });
   });
 
-  describe("getAllCommentsByPost Controller", () => {
+  describe("getAllCommentsByPost", () => {
     it("should return comments for a post", async () => {
       const mockComments = [
         { id: "1", content: "Test comment", user_id: "123", post_id: "456" },
+        { id: "2", content: "Test comment 2", user_id: "012", post_id: "456" },
+        { id: "3", content: "Test comment 3", user_id: "789", post_id: "456" },
       ];
       jest
         .spyOn(commentService, "getCommentsByPost")
@@ -87,7 +91,7 @@ describe("Comment Controller", () => {
       expect(res.json).toHaveBeenCalledWith(mockComments);
     });
 
-    it("should return 404 if no comments are found", async () => {
+    it("should return 404 if no comments are found for a post", async () => {
       jest.spyOn(commentService, "getCommentsByPost").mockResolvedValue(null);
 
       req.params = { post_id: "456" };
@@ -103,18 +107,18 @@ describe("Comment Controller", () => {
     it("should return 500 if an error occurs during getting comments by post", async () => {
       jest
         .spyOn(commentService, "getCommentsByPost")
-        .mockRejectedValue(new Error("Database error"));
+        .mockRejectedValue(new Error("Internal server error"));
 
       req.params = { post_id: "123" };
 
       await getAllCommentsByPost(req as Request, res as Response, jest.fn());
 
       expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: "Database error" });
+      expect(res.json).toHaveBeenCalledWith({ error: "Internal server error" });
     });
   });
 
-  describe("createNewComment Controller", () => {
+  describe("createNewComment", () => {
     it("should create a new comment", async () => {
       const mockComment = {
         content: "New comment",
@@ -138,19 +142,19 @@ describe("Comment Controller", () => {
     it("should return 500 if an error occurs during comment creation", async () => {
       jest
         .spyOn(commentService, "createNewComment")
-        .mockRejectedValue(new Error("Database error"));
+        .mockRejectedValue(new Error("Internal server error"));
 
       req.body = { content: "New comment", user_id: "123", post_id: "456" };
 
       await createComment(req as Request, res as Response, jest.fn());
 
       expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: "Database error" });
+      expect(res.json).toHaveBeenCalledWith({ error: "Internal server error" });
     });
   });
 
   describe("deleteComment", () => {
-    it("should delete a comment successfully", async () => {
+    it("should delete a comment", async () => {
       const req = {
         params: { id: "1", post_id: "456" },
       } as Partial<Request>;
@@ -183,21 +187,21 @@ describe("Comment Controller", () => {
       } as Partial<Response>;
 
       (commentService.deleteCommentById as jest.Mock).mockRejectedValue(
-        new Error("Database error")
+        new Error("Internal server error")
       );
       jest
         .spyOn(commentService, "deleteCommentById")
-        .mockRejectedValue(new Error("Database error"));
+        .mockRejectedValue(new Error("Internal server error"));
 
       await deleteComment(req as Request, res as Response, jest.fn());
 
       expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: "Database error" });
+      expect(res.json).toHaveBeenCalledWith({ error: "Internal server error" });
     });
   });
 
   describe("updateComment", () => {
-    it("should return 200 on successful comment update", async () => {
+    it("should update a comment", async () => {
       const req = {
         params: { id: "1", post_id: "456" },
         body: { title: "Updated Post" },
@@ -228,13 +232,13 @@ describe("Comment Controller", () => {
       } as Partial<Response>;
 
       jest
-        .spyOn(commentService, "deleteCommentById")
-        .mockRejectedValue(new Error("Database error"));
+        .spyOn(commentService, "updateCommentById")
+        .mockRejectedValue(new Error("Internal server error"));
 
-      await deleteComment(req as Request, res as Response, jest.fn());
+      await updateComment(req as Request, res as Response, jest.fn());
 
       expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: "Database error" });
+      expect(res.json).toHaveBeenCalledWith({ error: "Internal server error" });
     });
   });
 });

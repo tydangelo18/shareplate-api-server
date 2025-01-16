@@ -10,7 +10,7 @@ import * as userService from "@services/userService";
 import { User } from "@interfaces/user";
 
 describe("createUser Controller", () => {
-  it("should return 201 and a success message when the user is created", async () => {
+  it("should create a user", async () => {
     jest.spyOn(userService, "registerUser").mockResolvedValueOnce();
 
     const req = {
@@ -37,10 +37,10 @@ describe("createUser Controller", () => {
     });
   });
 
-  it("should return 500 and an error message when the service throws an error", async () => {
+  it("should return 500 if an error occurs during creating a user", async () => {
     jest
       .spyOn(userService, "registerUser")
-      .mockRejectedValueOnce(new Error("Service error"));
+      .mockRejectedValueOnce(new Error("Internal server error"));
 
     const req = {
       body: {
@@ -60,13 +60,38 @@ describe("createUser Controller", () => {
     await createUser(req, res, jest.fn());
 
     expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.json).toHaveBeenCalledWith({ error: "Service error" });
+    expect(res.json).toHaveBeenCalledWith({ error: "Internal server error" });
   });
 });
 
 describe("getAllUsers", () => {
-  it("should return 200 and a list of users", async () => {
-    const mockUsers = [{ id: 1, name: "John Doe" }] as unknown as User[];
+  it("should return users", async () => {
+    const mockUsers = [
+      {
+        id: 1,
+        first_name: "John",
+        last_name: "Doe",
+        profile_picture: "abc.com",
+      },
+      {
+        id: 2,
+        first_name: "Bob",
+        last_name: "Builder",
+        profile_picture: "def.com",
+      },
+      {
+        id: 3,
+        first_name: "Rick",
+        last_name: "James",
+        profile_picture: "ghi.com",
+      },
+      {
+        id: 4,
+        first_name: "Diana",
+        last_name: "Ross",
+        profile_picture: "jkl.com",
+      },
+    ] as unknown as User[];
     jest.spyOn(userService, "getUsers").mockResolvedValueOnce(mockUsers);
 
     const req = {} as Request;
@@ -95,11 +120,61 @@ describe("getAllUsers", () => {
     expect(res.status).toHaveBeenCalledWith(404);
     expect(res.json).toHaveBeenCalledWith({ error: "Users not found" });
   });
+
+  it("should return 500 if an error occurs during getting users", async () => {
+    jest
+      .spyOn(userService, "getUsers")
+      .mockRejectedValueOnce(new Error("Internal server error"));
+
+    const req = {
+      body: [
+        {
+          id: 1,
+          first_name: "John",
+          last_name: "Doe",
+          profile_picture: "abc.com",
+        },
+        {
+          id: 2,
+          first_name: "Bob",
+          last_name: "Builder",
+          profile_picture: "def.com",
+        },
+        {
+          id: 3,
+          first_name: "Rick",
+          last_name: "James",
+          profile_picture: "ghi.com",
+        },
+        {
+          id: 4,
+          first_name: "Diana",
+          last_name: "Ross",
+          profile_picture: "jkl.com",
+        },
+      ],
+    } as Request;
+
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    } as unknown as Response;
+
+    await getAllUsers(req, res, jest.fn());
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({ error: "Internal server error" });
+  });
 });
 
 describe("getUserById", () => {
-  it("should return 200 and a user object", async () => {
-    const mockUser = { id: 1, name: "John Doe" } as unknown as User;
+  it("should return a user", async () => {
+    const mockUser = {
+      id: 1,
+      first_name: "John",
+      last_name: "Doe",
+      profile_picture: "abc.com",
+    } as unknown as User;
     jest.spyOn(userService, "getUserById").mockResolvedValueOnce(mockUser);
 
     const req = { params: { id: "1" } } as unknown as Request;
@@ -128,15 +203,33 @@ describe("getUserById", () => {
     expect(res.status).toHaveBeenCalledWith(404);
     expect(res.json).toHaveBeenCalledWith({ error: "User not found" });
   });
+
+  it("should return 500 if an error occurs during getting a user", async () => {
+    jest
+      .spyOn(userService, "getUserById")
+      .mockRejectedValueOnce(new Error("Internal server error"));
+
+    const req = { params: { id: "1" } } as unknown as Request;
+
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    } as unknown as Response;
+
+    await getUser(req, res, jest.fn());
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({ error: "Internal server error" });
+  });
 });
 
 describe("updateUser", () => {
-  it("should return 200 and a success message when the user is updated", async () => {
+  it("should update a user", async () => {
     jest.spyOn(userService, "updateUserById").mockResolvedValueOnce();
 
     const req = {
       params: { id: "1" },
-      body: { name: "Updated Name" },
+      body: { first_name: "Bob", last_name: "Smith" },
     } as unknown as Request;
     const res = {
       status: jest.fn().mockReturnThis(),
@@ -146,17 +239,39 @@ describe("updateUser", () => {
     await updateUser(req, res, jest.fn());
 
     expect(userService.updateUserById).toHaveBeenCalledWith("1", {
-      name: "Updated Name",
+      first_name: "Bob",
+      last_name: "Smith",
     });
     expect(res.status).toHaveBeenCalledWith(200);
     expect(res.json).toHaveBeenCalledWith({
       message: "User 1 updated successfully",
     });
   });
+
+  it("should return 500 if an error occurs during updating a user", async () => {
+    const req = {
+      params: { id: "1" },
+      body: { first_name: "Bob", last_name: "Smith" },
+    } as Partial<Request>;
+
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      json: jest.fn(),
+    } as Partial<Response>;
+
+    jest
+      .spyOn(userService, "updateUserById")
+      .mockRejectedValue(new Error("Internal server error"));
+
+    await updateUser(req as Request, res as Response, jest.fn());
+
+    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.json).toHaveBeenCalledWith({ error: "Internal server error" });
+  });
 });
 
 describe("deleteUser", () => {
-  it("should return 200 and a success message when the user is deleted", async () => {
+  it("should delete a user", async () => {
     jest.spyOn(userService, "deleteUserById").mockResolvedValueOnce();
 
     const req = { params: { id: "1" } } as unknown as Request;
@@ -174,10 +289,10 @@ describe("deleteUser", () => {
     });
   });
 
-  it("should return 500 if there is an error during deletion", async () => {
+  it("should return 500 if an error occurs during deleting a user", async () => {
     jest
       .spyOn(userService, "deleteUserById")
-      .mockRejectedValueOnce(new Error("Delete error"));
+      .mockRejectedValueOnce(new Error("Internal server error"));
 
     const req = { params: { id: "1" } } as unknown as Request;
     const res = {
@@ -188,6 +303,6 @@ describe("deleteUser", () => {
     await deleteUser(req, res, jest.fn());
 
     expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.json).toHaveBeenCalledWith({ error: "Delete error" });
+    expect(res.json).toHaveBeenCalledWith({ error: "Internal server error" });
   });
 });
