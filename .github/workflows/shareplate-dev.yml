@@ -41,7 +41,7 @@ jobs:
 
       # Install Dependencies
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
       # Compile Typescript
       - name: Build
