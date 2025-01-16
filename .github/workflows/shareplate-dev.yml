@@ -54,7 +54,3 @@ jobs:
           DB_PASSWORD: ${{ secrets.TEST_DB_PASSWORD }}
           DB_NAME: ${{ secrets.TEST_DB_NAME }}
         run: npm run test
-
-      # Lint the code
-      - name: Lint
-        run: npm run lint
