@@ -26,16 +26,14 @@ describe("Comment Controller", () => {
     jest.clearAllMocks();
   });
 
-  describe("getAllCommentsByUser", () => {
+  describe("getAllCommentsByUser Controller", () => {
     it("should return comments for a user", async () => {
       const mockComments = [
         { id: "1", content: "Test comment", user_id: "123", post_id: "456" },
       ];
-      
-      // (commentService.getCommentsByUser as jest.Mock).mockResolvedValue(
-      //   mockComments
-      // );
-      jest.spyOn(commentService, 'getCommentsByUser').mockResolvedValue(mockComments);
+      jest
+        .spyOn(commentService, "getCommentsByUser")
+        .mockResolvedValue(mockComments);
 
       req.params = { user_id: "123" };
 
@@ -46,7 +44,7 @@ describe("Comment Controller", () => {
     });
 
     it("should return 404 if no comments are found", async () => {
-      (commentService.getCommentsByUser as jest.Mock).mockResolvedValue(null);
+      jest.spyOn(commentService, "getCommentsByUser").mockResolvedValue(null);
 
       req.params = { user_id: "123" };
 
@@ -58,10 +56,10 @@ describe("Comment Controller", () => {
       });
     });
 
-    it("should handle errors", async () => {
-      (commentService.getCommentsByUser as jest.Mock).mockRejectedValue(
-        new Error("Database error")
-      );
+    it("should return 500 if an error occurs during getting comments by user", async () => {
+      jest
+        .spyOn(commentService, "getCommentsByUser")
+        .mockRejectedValue(new Error("Database error"));
 
       req.params = { user_id: "123" };
 
@@ -72,14 +70,14 @@ describe("Comment Controller", () => {
     });
   });
 
-  describe("getAllCommentsByPost", () => {
+  describe("getAllCommentsByPost Controller", () => {
     it("should return comments for a post", async () => {
       const mockComments = [
-        { id: "1", content: "Test comment", post_id: "456" },
+        { id: "1", content: "Test comment", user_id: "123", post_id: "456" },
       ];
-      (commentService.getCommentsByPost as jest.Mock).mockResolvedValue(
-        mockComments
-      );
+      jest
+        .spyOn(commentService, "getCommentsByPost")
+        .mockResolvedValue(mockComments);
 
       req.params = { post_id: "456" };
 
@@ -90,7 +88,7 @@ describe("Comment Controller", () => {
     });
 
     it("should return 404 if no comments are found", async () => {
-      (commentService.getCommentsByPost as jest.Mock).mockResolvedValue(null);
+      jest.spyOn(commentService, "getCommentsByPost").mockResolvedValue(null);
 
       req.params = { post_id: "456" };
 
@@ -101,18 +99,31 @@ describe("Comment Controller", () => {
         error: "No comments found for this post",
       });
     });
+
+    it("should return 500 if an error occurs during getting comments by post", async () => {
+      jest
+        .spyOn(commentService, "getCommentsByPost")
+        .mockRejectedValue(new Error("Database error"));
+
+      req.params = { post_id: "123" };
+
+      await getAllCommentsByPost(req as Request, res as Response, jest.fn());
+
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ error: "Database error" });
+    });
   });
 
-  describe("createNewComment", () => {
+  describe("createNewComment Controller", () => {
     it("should create a new comment", async () => {
       const mockComment = {
         content: "New comment",
         user_id: "123",
         post_id: "456",
       };
-      (commentService.createNewComment as jest.Mock).mockResolvedValue(
-        undefined
-      );
+      jest
+        .spyOn(commentService, "createNewComment")
+        .mockResolvedValue(undefined);
 
       req.body = mockComment;
 
@@ -124,10 +135,10 @@ describe("Comment Controller", () => {
       });
     });
 
-    it("should handle errors", async () => {
-      (commentService.createNewComment as jest.Mock).mockRejectedValue(
-        new Error("Database error")
-      );
+    it("should return 500 if an error occurs during comment creation", async () => {
+      jest
+        .spyOn(commentService, "createNewComment")
+        .mockRejectedValue(new Error("Database error"));
 
       req.body = { content: "New comment", user_id: "123", post_id: "456" };
 
@@ -149,9 +160,7 @@ describe("Comment Controller", () => {
         json: jest.fn(),
       } as Partial<Response>;
 
-      (commentService.deleteCommentById as jest.Mock).mockResolvedValue({
-        success: true,
-      });
+      jest.spyOn(commentService, "deleteCommentById").mockResolvedValue();
 
       await deleteComment(req as Request, res as Response, jest.fn());
 
@@ -176,6 +185,9 @@ describe("Comment Controller", () => {
       (commentService.deleteCommentById as jest.Mock).mockRejectedValue(
         new Error("Database error")
       );
+      jest
+        .spyOn(commentService, "deleteCommentById")
+        .mockRejectedValue(new Error("Database error"));
 
       await deleteComment(req as Request, res as Response, jest.fn());
 
@@ -191,9 +203,7 @@ describe("Comment Controller", () => {
         body: { title: "Updated Post" },
       } as Partial<Request>;
 
-      (commentService.updateCommentById as jest.Mock).mockResolvedValue({
-        success: true,
-      });
+      jest.spyOn(commentService, "updateCommentById").mockResolvedValue();
 
       await updateComment(req as Request, res as Response, jest.fn());
 
@@ -217,9 +227,9 @@ describe("Comment Controller", () => {
         json: jest.fn(),
       } as Partial<Response>;
 
-      (commentService.deleteCommentById as jest.Mock).mockRejectedValue(
-        new Error("Database error")
-      );
+      jest
+        .spyOn(commentService, "deleteCommentById")
+        .mockRejectedValue(new Error("Database error"));
 
       await deleteComment(req as Request, res as Response, jest.fn());
 

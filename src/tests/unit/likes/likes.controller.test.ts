@@ -27,8 +27,8 @@ describe("Like Controller", () => {
 
   describe("getAllLikesByUser", () => {
     it("should return likes for a user", async () => {
-      const mockLikes = [{ id: 1, user_id: "123", post_id: "456" }];
-      (likeService.getLikesByUser as jest.Mock).mockResolvedValue(mockLikes);
+      const mockLikes = [{ id: "1", user_id: "123", post_id: "456" }];
+      jest.spyOn(likeService, "getLikesByUser").mockResolvedValue(mockLikes);
 
       req.params = { user_id: "123" };
 
@@ -39,7 +39,7 @@ describe("Like Controller", () => {
     });
 
     it("should return 404 if no likes are found", async () => {
-      (likeService.getLikesByUser as jest.Mock).mockResolvedValue(null);
+      jest.spyOn(likeService, "getLikesByUser").mockResolvedValue(null);
 
       req.params = { user_id: "123" };
 
@@ -52,9 +52,9 @@ describe("Like Controller", () => {
     });
 
     it("should handle errors", async () => {
-      (likeService.getLikesByUser as jest.Mock).mockRejectedValue(
-        new Error("Database error")
-      );
+      jest
+        .spyOn(likeService, "getLikesByUser")
+        .mockRejectedValue(new Error("Database error"));
 
       req.params = { user_id: "123" };
 
@@ -67,8 +67,8 @@ describe("Like Controller", () => {
 
   describe("getAllLikesByPost", () => {
     it("should return likes for a post", async () => {
-      const mockLikes = [{ id: 1, user_id: "123", post_id: "456" }];
-      (likeService.getLikesByPost as jest.Mock).mockResolvedValue(mockLikes);
+      const mockLikes = [{ id: "1", user_id: "123", post_id: "456" }];
+      jest.spyOn(likeService, "getLikesByPost").mockResolvedValue(mockLikes);
 
       req.params = { post_id: "456" };
 
@@ -79,7 +79,7 @@ describe("Like Controller", () => {
     });
 
     it("should return 404 if no likes are found", async () => {
-      (likeService.getLikesByPost as jest.Mock).mockResolvedValue(null);
+      jest.spyOn(likeService, "getLikesByPost").mockResolvedValue(null);
 
       req.params = { post_id: "456" };
 
@@ -92,9 +92,9 @@ describe("Like Controller", () => {
     });
 
     it("should handle errors", async () => {
-      (likeService.getLikesByPost as jest.Mock).mockRejectedValue(
-        new Error("Database error")
-      );
+      jest
+        .spyOn(likeService, "getLikesByPost")
+        .mockRejectedValue(new Error("Database error"));
 
       req.params = { post_id: "456" };
 
@@ -108,7 +108,7 @@ describe("Like Controller", () => {
   describe("createLike", () => {
     it("should create a new like", async () => {
       const mockLike = { user_id: "123", post_id: "456" };
-      (likeService.createNewLike as jest.Mock).mockResolvedValue(undefined);
+      jest.spyOn(likeService, "createNewLike").mockResolvedValue(undefined);
 
       req.body = mockLike;
 
@@ -124,6 +124,9 @@ describe("Like Controller", () => {
       (likeService.createNewLike as jest.Mock).mockRejectedValue(
         new Error("Error creating like")
       );
+      jest
+        .spyOn(likeService, "createNewLike")
+        .mockRejectedValue(new Error("Error creating like"));
 
       req.body = { user_id: "123", post_id: "456" };
 
@@ -145,9 +148,7 @@ describe("Like Controller", () => {
         json: jest.fn(),
       } as Partial<Response>;
 
-      (likeService.deleteLikeById as jest.Mock).mockResolvedValue({
-        success: true,
-      });
+      jest.spyOn(likeService, "deleteLikeById").mockResolvedValue();
 
       await deleteLike(req as Request, res as Response, jest.fn());
 
@@ -169,10 +170,9 @@ describe("Like Controller", () => {
         json: jest.fn(),
       } as Partial<Response>;
 
-      // Mock the deleteLikeById service method to reject with an error
-      (likeService.deleteLikeById as jest.Mock).mockRejectedValue(
-        new Error("Database error")
-      );
+      jest
+        .spyOn(likeService, "deleteLikeById")
+        .mockRejectedValue(new Error("Database error"));
 
       await deleteLike(req as Request, res as Response, jest.fn());
 

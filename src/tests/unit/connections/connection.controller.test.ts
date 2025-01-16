@@ -7,14 +7,8 @@ import {
   denyConnectionRequest,
   acceptConnectionRequest,
 } from "@controllers/connectionController";
-import {
-  getConnectionsByUser,
-  getConnectionRequestsByUser,
-  createNewConnectionRequest,
-  deleteConnectionById,
-  deleteConnectionRequestById,
-  updateConnectionRequestById,
-} from "@services/connectionService";
+import * as connectionService from "@services/connectionService";
+import { ConnectionStatus } from "@utils/enums";
 
 jest.mock("@services/connectionService");
 
@@ -37,28 +31,45 @@ describe("Connections Controller", () => {
 
   describe("getAllConnectionsByUser", () => {
     it("should return connections for a valid user", async () => {
-      const mockConnections = [{ id: "1", name: "Connection 1" }];
-      (getConnectionsByUser as jest.Mock).mockResolvedValue(mockConnections);
+      const mockConnections = [
+        {
+          id: "1",
+          requester_id: "123",
+          user_id: "456",
+          status: ConnectionStatus.ACCEPTED,
+        },
+      ];
+      // (getConnectionsByUser as jest.Mock).mockResolvedValue(mockConnections);
+      jest
+        .spyOn(connectionService, "getConnectionsByUser")
+        .mockResolvedValue(mockConnections);
 
       const req = mockRequest({ user_id: "123" });
       const res = mockResponse();
 
       await getAllConnectionsByUser(req as Request, res as Response, mockNext);
 
-      expect(getConnectionsByUser).toHaveBeenCalledWith("123");
+      expect(connectionService.getConnectionsByUser).toHaveBeenCalledWith(
+        "123"
+      );
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith(mockConnections);
     });
 
     it("should return 404 if no connections found", async () => {
-      (getConnectionsByUser as jest.Mock).mockResolvedValue(null);
+      // (getConnectionsByUser as jest.Mock).mockResolvedValue(null);
+      jest
+        .spyOn(connectionService, "getConnectionsByUser")
+        .mockResolvedValue(null);
 
       const req = mockRequest({ user_id: "123" });
       const res = mockResponse();
 
       await getAllConnectionsByUser(req as Request, res as Response, mockNext);
 
-      expect(getConnectionsByUser).toHaveBeenCalledWith("123");
+      expect(connectionService.getConnectionsByUser).toHaveBeenCalledWith(
+        "123"
+      );
       expect(res.status).toHaveBeenCalledWith(404);
       expect(res.json).toHaveBeenCalledWith({
         error: "No connections found for this user",
@@ -66,9 +77,12 @@ describe("Connections Controller", () => {
     });
 
     it("should return 500 on error", async () => {
-      (getConnectionsByUser as jest.Mock).mockRejectedValue(
-        new Error("Service error")
-      );
+      // (getConnectionsByUser as jest.Mock).mockRejectedValue(
+      //   new Error("Service error")
+      // );
+      jest
+        .spyOn(connectionService, "getConnectionsByUser")
+        .mockRejectedValue(new Error("Service Error"));
 
       const req = mockRequest({ user_id: "123" });
       const res = mockResponse();
@@ -76,16 +90,26 @@ describe("Connections Controller", () => {
       await getAllConnectionsByUser(req as Request, res as Response, mockNext);
 
       expect(res.status).toHaveBeenCalledWith(500);
-      expect(res.json).toHaveBeenCalledWith({ error: "Service error" });
+      expect(res.json).toHaveBeenCalledWith({ error: "Service Error" });
     });
   });
 
   describe("getAllConnectionRequestsByUser", () => {
     it("should return connection requests for a valid user", async () => {
-      const mockConnections = [{ id: "1", name: "Connection 1" }];
-      (getConnectionRequestsByUser as jest.Mock).mockResolvedValue(
-        mockConnections
-      );
+      const mockConnections = [
+        {
+          id: "1",
+          requester_id: "123",
+          user_id: "456",
+          status: ConnectionStatus.ACCEPTED,
+        },
+      ];
+      // (getConnectionRequestsByUser as jest.Mock).mockResolvedValue(
+      //   mockConnections
+      // );
+      jest
+        .spyOn(connectionService, "getConnectionRequestsByUser")
+        .mockResolvedValue(mockConnections);
 
       const req = mockRequest({ user_id: "123" });
       const res = mockResponse();
@@ -96,13 +120,18 @@ describe("Connections Controller", () => {
         mockNext
       );
 
-      expect(getConnectionRequestsByUser).toHaveBeenCalledWith("123");
+      expect(
+        connectionService.getConnectionRequestsByUser
+      ).toHaveBeenCalledWith("123");
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith(mockConnections);
     });
 
     it("should return 404 if no connections found", async () => {
-      (getConnectionRequestsByUser as jest.Mock).mockResolvedValue(null);
+      // (getConnectionRequestsByUser as jest.Mock).mockResolvedValue(null);
+      jest
+        .spyOn(connectionService, "getConnectionRequestsByUser")
+        .mockResolvedValue(null);
 
       const req = mockRequest({ user_id: "123" });
       const res = mockResponse();
@@ -113,7 +142,9 @@ describe("Connections Controller", () => {
         mockNext
       );
 
-      expect(getConnectionRequestsByUser).toHaveBeenCalledWith("123");
+      expect(
+        connectionService.getConnectionRequestsByUser
+      ).toHaveBeenCalledWith("123");
       expect(res.status).toHaveBeenCalledWith(404);
       expect(res.json).toHaveBeenCalledWith({
         error: "No connection requests found for this user",
@@ -121,9 +152,13 @@ describe("Connections Controller", () => {
     });
 
     it("should return 500 on error", async () => {
-      (getConnectionRequestsByUser as jest.Mock).mockRejectedValue(
-        new Error("Service error")
-      );
+      // (getConnectionRequestsByUser as jest.Mock).mockRejectedValue(
+      //   new Error("Service error")
+      // );
+
+      jest
+        .spyOn(connectionService, "getConnectionRequestsByUser")
+        .mockRejectedValue(new Error("Service error"));
 
       const req = mockRequest({ user_id: "123" });
       const res = mockResponse();
@@ -141,17 +176,22 @@ describe("Connections Controller", () => {
 
   describe("createConnectionRequest", () => {
     it("should create a new connection request", async () => {
-      (createNewConnectionRequest as jest.Mock).mockResolvedValue(undefined);
+      // (createNewConnectionRequest as jest.Mock).mockResolvedValue(undefined);
+      jest
+        .spyOn(connectionService, "createNewConnectionRequest")
+        .mockResolvedValue(undefined);
 
       const req = mockRequest({}, { id: "1", userId: "123" });
       const res = mockResponse();
 
       await createConnectionRequest(req as Request, res as Response, mockNext);
 
-      expect(createNewConnectionRequest).toHaveBeenCalledWith({
-        id: "1",
-        userId: "123",
-      });
+      expect(connectionService.createNewConnectionRequest).toHaveBeenCalledWith(
+        {
+          id: "1",
+          userId: "123",
+        }
+      );
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith({
         message: "Connection request created successfully",
@@ -159,9 +199,12 @@ describe("Connections Controller", () => {
     });
 
     it("should return 500 on error", async () => {
-      (createNewConnectionRequest as jest.Mock).mockRejectedValue(
-        new Error("Service error")
-      );
+      // (createNewConnectionRequest as jest.Mock).mockRejectedValue(
+      //   new Error("Service error")
+      // );
+      jest
+        .spyOn(connectionService, "createNewConnectionRequest")
+        .mockRejectedValue(new Error("Service error"));
 
       const req = mockRequest({}, { id: "1", userId: "123" });
       const res = mockResponse();
@@ -175,14 +218,17 @@ describe("Connections Controller", () => {
 
   describe("deleteConnection", () => {
     it("should delete a connection", async () => {
-      (deleteConnectionById as jest.Mock).mockResolvedValue(undefined);
+      // (deleteConnectionById as jest.Mock).mockResolvedValue(undefined);
+      jest
+        .spyOn(connectionService, "deleteConnectionById")
+        .mockResolvedValue(undefined);
 
       const req = mockRequest({ id: "1" });
       const res = mockResponse();
 
       await deleteConnection(req as Request, res as Response, mockNext);
 
-      expect(deleteConnectionById).toHaveBeenCalledWith("1");
+      expect(connectionService.deleteConnectionById).toHaveBeenCalledWith("1");
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith({
         message: "Connection 1 deleted successfully",
@@ -190,9 +236,12 @@ describe("Connections Controller", () => {
     });
 
     it("should return 500 on error", async () => {
-      (deleteConnectionById as jest.Mock).mockRejectedValue(
-        new Error("Service error")
-      );
+      // (deleteConnectionById as jest.Mock).mockRejectedValue(
+      //   new Error("Service error")
+      // );
+      jest
+        .spyOn(connectionService, "deleteConnectionById")
+        .mockRejectedValue(new Error("Service error"));
 
       const req = mockRequest({ id: "1" });
       const res = mockResponse();
@@ -206,9 +255,12 @@ describe("Connections Controller", () => {
 
   describe("denyConnectionRequest", () => {
     it("should return 200 on successful connection decline", async () => {
-      (deleteConnectionRequestById as jest.Mock).mockResolvedValue({
-        success: true,
-      });
+      // (deleteConnectionRequestById as jest.Mock).mockResolvedValue({
+      //   success: true,
+      // });
+      jest
+        .spyOn(connectionService, "deleteConnectionRequestById")
+        .mockResolvedValue();
 
       const req = { params: { id: "1" } } as unknown as Request;
       const res = {
@@ -216,13 +268,12 @@ describe("Connections Controller", () => {
         json: jest.fn(),
       } as unknown as Response;
 
-      // Call the controller method
       await denyConnectionRequest(req as Request, res as Response, jest.fn());
 
-      //   // Check if the service method was called correctly
-      expect(deleteConnectionRequestById).toHaveBeenCalledWith("1");
+      expect(
+        connectionService.deleteConnectionRequestById
+      ).toHaveBeenCalledWith("1");
 
-      //   // Check if response methods were called with the expected arguments
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith({
         message: "Connection Request 1 denied successfully",
@@ -232,9 +283,12 @@ describe("Connections Controller", () => {
 
   describe("acceptConnectionRequest", () => {
     it("should return 200 on successful connection acceptance", async () => {
-      (updateConnectionRequestById as jest.Mock).mockResolvedValue({
-        success: true,
-      });
+      // (updateConnectionRequestById as jest.Mock).mockResolvedValue({
+      //   success: true,
+      // });
+      jest
+        .spyOn(connectionService, "updateConnectionRequestById")
+        .mockResolvedValue();
 
       const req = { params: { id: "1" } } as unknown as Request;
       const res = {
@@ -244,7 +298,9 @@ describe("Connections Controller", () => {
 
       await acceptConnectionRequest(req, res, jest.fn());
 
-      expect(updateConnectionRequestById).toHaveBeenCalledWith("1");
+      expect(
+        connectionService.updateConnectionRequestById
+      ).toHaveBeenCalledWith("1");
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith({
         message: `Connection Request 1 accepted successfully`,
