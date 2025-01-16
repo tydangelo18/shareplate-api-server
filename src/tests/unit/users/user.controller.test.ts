@@ -62,6 +62,11 @@ describe("createUser Controller", () => {
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith({ error: "Internal server error" });
   });
+
+  // TODO => first_name is required
+  // TODO => last_name is required
+  // TODO => invalid email format
+  // TODO => password requirements (Upper, lower, number, special, length >= 8)
 });
 
 describe("getAllUsers", () => {

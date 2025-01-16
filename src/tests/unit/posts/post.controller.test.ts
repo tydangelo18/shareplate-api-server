@@ -243,6 +243,8 @@ describe("Post Controllers", () => {
         error: "Internal server error",
       });
     });
+
+    // TODO => post_picture required
   });
 
   describe("updatePost", () => {

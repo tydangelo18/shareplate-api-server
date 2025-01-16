@@ -104,4 +104,6 @@ describe("login Controller", () => {
       error: "Invalid email or password",
     });
   });
+
+  // TODO => invalid email format
 });

@@ -151,6 +151,8 @@ describe("Comment Controller", () => {
       expect(res.status).toHaveBeenCalledWith(500);
       expect(res.json).toHaveBeenCalledWith({ error: "Internal server error" });
     });
+
+    // TODO => comment content required
   });
 
   describe("deleteComment", () => {
