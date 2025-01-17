@@ -8,6 +8,11 @@ import {
 } from "@services/userService";
 import { User } from "@interfaces/user";
 
+/**
+ * Handle HTTP requests and responses for users.
+ *
+ */
+
 export const getAllUsers = async (
   _req: Request,
   res: Response,
@@ -49,7 +54,7 @@ export const getUser = async (
   }
 };
 
-export const createUser =  async (
+export const createUser = async (
   req: Request,
   res: Response,
   _next: NextFunction

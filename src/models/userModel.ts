@@ -3,6 +3,10 @@ import { User } from "@interfaces/user";
 import client from "@utils/db";
 import { v4 as uuidv4 } from "uuid";
 
+/**
+ * Define the database schema and query logic for users
+ */
+
 export const findAllUsers = async (): Promise<User[] | null> => {
   const result = await client.query(`SELECT * FROM users`);
   return result.rows;

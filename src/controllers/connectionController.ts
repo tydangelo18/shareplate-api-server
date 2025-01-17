@@ -9,6 +9,11 @@ import {
 } from "@services/connectionService";
 import { Connection } from "@interfaces/connection";
 
+/**
+ * Handle HTTP requests and responses for connections.
+ *
+ */
+
 export const getAllConnectionsByUser = async (
   req: Request,
   res: Response,

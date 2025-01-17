@@ -3,6 +3,7 @@ import {
   commentValidator,
   handleValidationErrors,
 } from "@middlewares/validator";
+// import { authenticateToken } from "@middlewares/authMiddleware";
 import {
   getAllCommentsByUser,
   getAllCommentsByPost,
@@ -11,12 +12,41 @@ import {
   updateComment,
 } from "@controllers/commentController";
 
+/**
+ * Define API endpoints and link them to their respective comment controllers.
+ */
+
 const router = Router();
 
-router.get("/user/:user_id", getAllCommentsByUser);
-router.get("/post/:post_id", getAllCommentsByPost);
-router.post("/", [...commentValidator, handleValidationErrors], createComment);
-router.delete("/:id/:post_id", deleteComment);
-router.put("/:id", updateComment);
+router.get(
+  "/user/:user_id",
+  // authenticateToken,
+  getAllCommentsByUser
+);
+
+router.get(
+  "/post/:post_id",
+  //  authenticateToken,
+  getAllCommentsByPost
+);
+
+router.post(
+  "/",
+  // authenticateToken,
+  [...commentValidator, handleValidationErrors],
+  createComment
+);
+
+router.delete(
+  "/:id/:post_id",
+  // authenticateToken,
+  deleteComment
+);
+
+router.put(
+  "/:id",
+  // authenticateToken,
+  updateComment
+);
 
 export default router;

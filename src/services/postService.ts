@@ -9,6 +9,10 @@ import {
 import { Post } from "@interfaces/post";
 import { Recipe } from "@interfaces/recipe";
 
+/**
+ * Business logic: communicates with the model and prepares data for the post controller.
+ */
+
 export const getPostsByUser = async (
   user_id: string
 ): Promise<Post[] | null> => {

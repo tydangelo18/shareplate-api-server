@@ -8,6 +8,10 @@ import {
 } from "@models/connectionModel";
 import { Connection } from "@interfaces/connection";
 
+/**
+ * Business logic: communicates with the model and prepares data for the connection controller.
+ */
+
 export const getConnectionsByUser = async (
   user_id: string
 ): Promise<Connection[] | null> => {

@@ -8,6 +8,11 @@ import {
   deletePostById,
 } from "@services/postService";
 
+/**
+ * Handle HTTP requests and responses for posts.
+ *
+ */
+
 export const getAllPostsByUser = async (
   req: Request,
   res: Response,

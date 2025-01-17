@@ -17,8 +17,8 @@ export const authenticateToken = async (
 
   jwt.verify(token, JWT_SECRET, (err: any, user: any) => {
     if (err) {
-        res.status(403).json({ error: "Invalid Token"})
-        return;
+      res.status(403).json({ error: "Invalid Token" });
+      return;
     }
     req.body = user;
     next();
