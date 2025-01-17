@@ -7,6 +7,11 @@ import {
 } from "@services/likeService";
 import { Like } from "@interfaces/like";
 
+/**
+ * Handle HTTP requests and responses for likes.
+ *
+ */
+
 export const getAllLikesByUser = async (
   req: Request,
   res: Response,

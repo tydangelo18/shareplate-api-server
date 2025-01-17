@@ -9,6 +9,10 @@ import {
 } from "@models/commentModel";
 import { Comment } from "@interfaces/comment";
 
+/**
+ * Business logic: communicates with the model and prepares data for the comment controller.
+ */
+
 export const getCommentsByUser = async (
   user_id: string
 ): Promise<Comment[] | null> => {

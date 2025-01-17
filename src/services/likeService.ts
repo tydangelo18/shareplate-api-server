@@ -9,6 +9,10 @@ import {
 } from "@models/likeModel";
 import { Like } from "@interfaces/like";
 
+/**
+ * Business logic: communicates with the model and prepares data for the like controller.
+ */
+
 export const getLikesByUser = async (
   user_id: string
 ): Promise<Like[] | null> => {

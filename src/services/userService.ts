@@ -7,6 +7,10 @@ import {
 } from "@models/userModel";
 import { User } from "@interfaces/user";
 
+/**
+ * Business logic: communicates with the model and prepares data for the user controller.
+ */
+
 export const getUsers = async (): Promise<User[] | null> => {
   return await findAllUsers();
 };

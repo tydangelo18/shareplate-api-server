@@ -2,6 +2,10 @@ import client from "@utils/db";
 import { v4 as uuidv4 } from "uuid";
 import { Like } from "@interfaces/like";
 
+/**
+ * Define the database schema and query logic for likes
+ */
+
 export const findAllLikesByUser = async (
   user_id: string
 ): Promise<Like[] | null> => {

@@ -8,6 +8,11 @@ import {
 } from "@services/commentService";
 import { Comment } from "@interfaces/comment";
 
+/**
+ * Handle HTTP requests and responses for comments.
+ *
+ */
+
 export const getAllCommentsByUser = async (
   req: Request,
   res: Response,

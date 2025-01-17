@@ -4,6 +4,10 @@ import { Post } from "@interfaces/post";
 import { Recipe } from "@interfaces/recipe";
 import { ConnectionStatus } from "@utils/enums";
 
+/**
+ * Define the database schema and query logic for posts
+ */
+
 export const findAllPostsByUser = async (
   user_id: string
 ): Promise<Post[] | null> => {

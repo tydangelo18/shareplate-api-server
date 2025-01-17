@@ -6,14 +6,42 @@ import {
   updateUser,
   deleteUser,
 } from "@controllers/userController";
-import { signUpValidator, handleValidationErrors } from "src/middlewares/validator";
+import {
+  signUpValidator,
+  handleValidationErrors,
+} from "@middlewares/validator";
+// import { authenticateToken } from "@middlewares/authMiddleware";
+
+/**
+ * Define API endpoints and link them to their respective user controllers.
+ */
 
 const router = Router();
 
-router.get("/", getAllUsers);
-router.get("/:id", getUser);
+router.get(
+  "/",
+  // authenticateToken,
+  getAllUsers
+);
+
+router.get(
+  "/:id",
+  // authenticateToken,
+  getUser
+);
+
 router.post("/", [...signUpValidator, handleValidationErrors], createUser);
-router.put("/:id", updateUser);
-router.delete("/:id", deleteUser);
+
+router.put(
+  "/:id",
+  // authenticateToken,
+  updateUser
+);
+
+router.delete(
+  "/:id",
+  // authenticateToken,
+  deleteUser
+);
 
 export default router;

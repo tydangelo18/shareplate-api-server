@@ -2,6 +2,10 @@ import client from "@utils/db";
 import { v4 as uuidv4 } from "uuid";
 import { Comment } from "@interfaces/comment";
 
+/**
+ * Define the database schema and query logic for comments
+ */
+
 export const findAllCommentsByUser = async (
   user_id: string
 ): Promise<Comment[] | null> => {

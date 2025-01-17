@@ -3,6 +3,10 @@ import { findUserByEmail } from "@models/userModel"
 import { JWT_SECRET, JWT_EXPIRES_IN } from '@utils/jwt';
 import { verifyPassword } from "@utils/password";
 
+/**
+ * Business logic: communicates with the model and prepares data for the auth controller.
+ */
+
 export async function login(email: string, password: string) {
     const user = await findUserByEmail(email)
 

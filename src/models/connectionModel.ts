@@ -3,6 +3,10 @@ import { v4 as uuidv4 } from "uuid";
 import { Connection } from "@interfaces/connection";
 import { ConnectionStatus } from "@utils/enums";
 
+/**
+ * Define the database schema and query logic for connections
+ */
+
 export const findAllConnectionsByUser = async (
   user_id: string
 ): Promise<Connection[] | null> => {

@@ -1,6 +1,11 @@
 import { Request, Response, NextFunction } from "express";
 import * as authService from "@services/authService";
 
+/**
+ * Handle HTTP requests and responses for auth.
+ *
+ */
+
 export const login = async (req: Request, res: Response, _next: NextFunction): Promise<void> => {
   const { email, password } = req.body;
 

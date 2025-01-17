@@ -7,14 +7,48 @@ import {
   updatePost,
   deletePost,
 } from "@controllers/postController";
+// import { authenticateToken } from "@middlewares/authMiddleware";
+
+/**
+ * Define API endpoints and link them to their respective post controllers.
+ */
 
 const router = Router();
 
-router.get("/user/:user_id", getAllPostsByUser);
-router.get("/:id", getPost);
-router.get("/feed/:user_id", getAllPostsForFeedByUser);
-router.post("/", createPost);
-router.put("/:id", updatePost);
-router.delete("/:id", deletePost);
+router.get(
+  "/user/:user_id",
+  // authenticateToken,
+  getAllPostsByUser
+);
+
+router.get(
+  "/:id",
+  // authenticateToken,
+  getPost
+);
+
+router.get(
+  "/feed/:user_id",
+  // authenticateToken,
+  getAllPostsForFeedByUser
+);
+
+router.post(
+  "/",
+  // authenticateToken,
+  createPost
+);
+
+router.put(
+  "/:id",
+  // authenticateToken,
+  updatePost
+);
+
+router.delete(
+  "/:id",
+  // authenticateToken,
+  deletePost
+);
 
 export default router;

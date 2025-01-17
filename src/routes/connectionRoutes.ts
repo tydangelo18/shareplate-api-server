@@ -7,14 +7,48 @@ import {
   denyConnectionRequest,
   acceptConnectionRequest,
 } from "@controllers/connectionController";
+// import { authenticateToken } from "@middlewares/authMiddleware";
+
+/**
+ * Define API endpoints and link them to their respective connection controllers.
+ */
 
 const router = Router();
 
-router.get("/:user_id", getAllConnectionsByUser);
-router.get("/requests/:user_id", getAllConnectionRequestsByUser);
-router.post("/requests", createConnectionRequest);
-router.put("/requests/:id", acceptConnectionRequest);
-router.delete("/requests/:id", denyConnectionRequest);
-router.delete("/:id", deleteConnection);
+router.get(
+  "/:user_id",
+  // authenticateToken,
+  getAllConnectionsByUser
+);
+
+router.get(
+  "/requests/:user_id",
+  // authenticateToken,
+  getAllConnectionRequestsByUser
+);
+
+router.post(
+  "/requests",
+  //  authenticateToken,
+  createConnectionRequest
+);
+
+router.put(
+  "/requests/:id",
+  //  authenticateToken,
+  acceptConnectionRequest
+);
+
+router.delete(
+  "/requests/:id",
+  //  authenticateToken,
+  denyConnectionRequest
+);
+
+router.delete(
+  "/:id",
+  //  authenticateToken,
+  deleteConnection
+);
 
 export default router;

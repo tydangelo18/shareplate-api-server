@@ -17,7 +17,7 @@ export const connectDB = async () => {
     console.log("Database connection successful!");
   } catch (error) {
     console.error("Database connection failed:", error);
-  } 
+  }
 };
 
 export default client;
