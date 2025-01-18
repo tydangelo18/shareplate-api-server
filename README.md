@@ -1,6 +1,6 @@
 # shareplate-api-server
 
-Api server for a social media application for foodies to share their meals/food experiences and interact with other users’ posts. Currently design and development.
+Api server for a social media application for foodies to share their meals/food experiences and interact with other users’ posts. Currently a Minimum Viable Product.
 
 ## Figma Design
 
