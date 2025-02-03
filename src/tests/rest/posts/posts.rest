@@ -1,0 +1,44 @@
+GET http://localhost:3000/api/posts/user/1bc1d72c-3d9a-4144-86d9-51617b80058b
+Content-Type: application/json
+
+###
+GET http://localhost:3000/api/posts/6c67a857-335b-484e-ae30-601c1e3a591a
+Content-Type: application/json
+
+###
+GET http://localhost:3000/api/posts/feed/1bc1d72c-3d9a-4144-86d9-51617b80058b
+Content-Type: application/json
+
+###
+POST http://localhost:3000/api/posts
+Content-Type: application/json
+
+{
+  "post": {
+    "user_id": "363c0960-eb6a-431b-92b5-dbe21e8c234b",
+    "rating": 3,
+    "caption": "Yummy Soup",
+    "location": "yessss"
+  },
+  "recipe": {
+    "type": "Vegan",
+    "link": "https://recipe-link.com",
+     "content": "Mix ingredients and broil.",
+    "ingredients": [
+     { "name": "Tomato", "quantity": 2, "unit": "cups" },
+     { "name": "Basil", "quantity": 5, "unit": "leaves" }
+   ]
+  }
+}
+
+###
+PUT http://localhost:3000/api/posts/6c67a857-335b-484e-ae30-601c1e3a591a
+Content-Type: application/json
+
+{
+  "post": { "caption": "yummmmmm" }
+}
+
+###
+DELETE http://localhost:3000/api/posts/e5c17a8d-e16e-4ef6-898d-1b3886b09299
+Content-Type: application/json

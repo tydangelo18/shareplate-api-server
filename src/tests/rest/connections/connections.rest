@@ -1,0 +1,28 @@
+GET http://localhost:3000/api/connections/1bc1d72c-3d9a-4144-86d9-51617b80058b
+Content-Type: application/json
+
+###
+GET http://localhost:3000/api/connections/requests/1bc1d72c-3d9a-4144-86d9-51617b80058b
+Content-Type: application/json
+
+###
+POST http://localhost:3000/api/connections/requests
+Content-Type: application/json
+
+{
+    "user_id": "1bc1d72c-3d9a-4144-86d9-51617b80058b",
+    "requester_id": "363c0960-eb6a-431b-92b5-dbe21e8c234b"
+}
+
+###
+PUT http://localhost:3000/api/connections/requests/b0ee54e3-1434-4eac-9c25-3cd8ba023db0
+Content-Type: application/json
+
+###
+DELETE http://localhost:3000/api/connections/requests/e6bc226f-7e53-4a56-86a5-d151aab40d9d
+Content-Type: application/json
+
+###
+DELETE http://localhost:3000/api/connections/92aba31c-a480-4a36-910d-688dc990eb96
+Content-Type: application/json
+

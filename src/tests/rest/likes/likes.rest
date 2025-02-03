@@ -1,0 +1,19 @@
+GET http://localhost:3000/api/likes/user/1bc1d72c-3d9a-4144-86d9-51617b80058b
+Content-Type: application/json
+
+###
+GET http://localhost:3000/api/likes/post/2f0b2a95-70bd-452e-a5c7-e7f0b8cf6213
+Content-Type: application/json
+
+###
+POST http://localhost:3000/api/likes
+Content-Type: application/json
+
+{
+  "user_id": "1bc1d72c-3d9a-4144-86d9-51617b80058b",
+  "post_id": "e3d5b30c-eae6-4fb0-864a-0a3569087277"
+}
+
+###
+DELETE http://localhost:3000/api/likes/a2d349a5-6d9f-476a-83e3-3050c1f44f53/e3d5b30c-eae6-4fb0-864a-0a3569087277
+Content-Type: application/json
